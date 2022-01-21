@@ -1,0 +1,11 @@
+
+
+export const INIT_GROUPS = 'INIT_GROUPS';
+export const SAVE_GROUPS = 'SAVE_GROUPS';
+export const CREATE_GROUP = 'CREATE_GROUP';
+export const DELETE_GROUP = 'DELETE_GROUP';
+export const SELECT_GROUP = 'SELECT_GROUP';
+export const UNSELECT_GROUP = 'UNSELECT_GROUP';
+export const ADD_GROUP_SERVICE = 'ADD_GROUP_SERVICE';
+export const DELETE_GROUP_SERVICE = 'DELETE_GROUP_SERVICE';
+export const GET_GROUPS = 'GET_GROUPS';
