@@ -1,48 +1,35 @@
 
 <template>
-  <div class="rk-dashboard-bar-select flex-h"
-       v-clickout="
+  <div class="rk-dashboard-bar-select flex-h" v-clickout="
       () => {
         visible = false;
         search = '';
       }
-    "
-       :class="{ active: visible, cp: selectable, cd: !selectable }">
-    <div class="rk-dashboard-bar-i flex-h"
-         @click="selectable && (visible = !visible)">
-      <rk-icon :icon="`${icon}`"
-               class="icon lg mr-15" />
+    " :class="{ active: visible, cp: selectable, cd: !selectable }">
+    <div class="grey">{{ title +' : '}}</div>
+    <div class="rk-dashboard-bar-i flex-h miw-200 maw-250" @click="selectable && (visible = !visible)">
+      <!-- <rk-icon :icon="`${icon}`"
+               class="icon lg mr-15" /> -->
       <div class="mr-15 rk-dashboard-bar-i-text">
-        <div class="sm grey">{{ title }}</div>
-        <div class="selector-ell"
-             v-tooltip:right.ellipsis="current.label || ''">
+
+        <div class="selector-ell" v-tooltip:right.ellipsis="current.label || ''" :title="current.label||''">
           {{ current.label }}
         </div>
       </div>
-      <svg v-if="selectable"
-           class="icon lg trans"
-           :style="`transform: rotate(${visible ? 180 : 0}deg)`">
+      <svg v-if="selectable" class="icon lg trans" :style="`transform: rotate(${visible ? 180 : 0}deg)`">
         <use xlink:href="#arrow-down"></use>
       </svg>
     </div>
-    <div class="rk-dashboard-sel"
-         v-if="visible && selectable">
+    <div class="rk-dashboard-sel" v-if="visible && selectable">
       <div>
-        <input type="text"
-               class="rk-dashboard-sel-search"
-               v-model="search" />
-        <svg class="icon sm close"
-             @click="search = ''"
-             v-if="search">
+        <input type="text" class="rk-dashboard-sel-search" v-model="search" />
+        <svg class="icon sm close" @click="search = ''" v-if="search">
           <use xlink:href="#clear"></use>
         </svg>
       </div>
       <div class="rk-dashboard-opt-wrapper scroll_bar_style">
-        <div class="rk-dashboard-opt ell"
-             @click="i.disabled ? () => {} : handleSelect(i)"
-             :class="{ active: i.key === current.key, disabled: i.disabled }"
-             v-for="(i, index) in filterData"
-             :key="i.key + index">
+        <div class="rk-dashboard-opt ell" @click="i.disabled ? () => {} : handleSelect(i)" :class="{ active: i.key === current.key, disabled: i.disabled }" v-for="(i, index) in filterData"
+          :key="i.key + index">
           {{ i.label }}
         </div>
       </div>
@@ -81,6 +68,8 @@ export default class ToolBarSelect extends Vue {
   z-index: 1;
   height: 52px;
   justify-content: space-between;
+  // flex: 1;
+  margin-right: 10px;
   .sm {
     line-height: 12px;
   }
@@ -90,18 +79,28 @@ export default class ToolBarSelect extends Vue {
 }
 .rk-dashboard-bar-i-text {
   max-width: 350px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
   .selector-ell {
     word-wrap: break-word;
     word-break: break-all;
   }
 }
 .rk-dashboard-bar-i {
-  height: 100%;
-  padding: 0 15px;
-  border-right: 2px solid #252a2f;
+  background: #fff;
+  border-radius: 3px;
+  padding: 3px 10px;
+  margin-left: 5px;
+  border-right: 2px solid var(--border-color);
+  color: #000;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
   &.active,
   &:hover {
-    background-color: #40454e;
+    // background-color: #40454e;
   }
 }
 .rk-dashboard-sel {
@@ -109,7 +108,7 @@ export default class ToolBarSelect extends Vue {
   top: 50px;
   left: -1px;
   box-shadow: 0 1px 6px rgba(99, 99, 99, 0.2);
-  background-color: #252a2f;
+  background-color: var(--main-bg);
   width: 100%;
   border-radius: 0 0 3px 3px;
   .close {
@@ -135,7 +134,7 @@ export default class ToolBarSelect extends Vue {
 .rk-dashboard-sel-search {
   width: calc(100% - 4px);
   border: 0;
-  background-color: #333840;
+  background-color: var(--main-bg);
   color: #eee;
   outline: 0;
   padding: 7px 25px 7px 10px;

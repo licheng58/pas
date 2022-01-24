@@ -2,13 +2,16 @@
 
 <template>
   <div class="flex-h">
-    <div class="rk-dashboard-bar-btn"
+    <!-- 编辑 -->
+    <!-- <div class="rk-dashboard-bar-btn"
          @click="handleSetEdit">
       <rk-icon class="lg"
                :style="`color:${!rocketGlobal.edit ? '' : '#ffc107'}`"
                :icon="!rocketGlobal.edit ? 'lock' : 'lock-open'"
                v-tooltip:bottom="{ content: rocketGlobal.edit ? 'view' : 'edit' }" />
-    </div>
+    </div> -->
+
+    <!-- 文件 -->
     <div class="rk-dashboard-bar-btn"
          v-tooltip:bottom="{ content: 'import' }">
       <input id="tool-bar-file"
@@ -22,12 +25,16 @@
                  icon="folder_open" />
       </label>
     </div>
+
+    <!-- 下载 -->
     <div class="rk-dashboard-bar-btn"
          @click="exportData">
       <rk-icon class="lg"
                icon="save_alt"
                v-tooltip:bottom="{ content: 'export' }" />
     </div>
+
+    <!-- 刷新 -->
     <div class="rk-dashboard-bar-btn"
          @click="handleOption">
       <rk-icon class="lg"
@@ -101,8 +108,8 @@ export default class ToolBarBtns extends Vue {
 <style lang="scss" scoped>
 .rk-dashboard-bar-btn {
   padding: 0 8px;
-  border-right: 2px solid #252a2f;
-  height: 19px;
+  // border-right: 2px solid var(--border-color);
+  height: 25px;
   cursor: pointer;
 }
 #tool-bar-file {

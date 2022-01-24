@@ -56,9 +56,10 @@
         {icon: 'API', click: this.handleGoEndpoint},
         {icon: 'INSTANCE', click: this.handleGoInstance},
         {icon: 'TRACE', click: this.handleGoTrace},
-        {icon: 'ALARM', click: this.handleGoAlarm},
+        // {icon: 'ALARM', click: this.handleGoAlarm},
+        // {icon: '', click: this.handleGoAlarm},
         {icon: 'ENDPOINT', click: this.handleGoEndpointDependency},
-        {icon: ''},
+        // {icon: ''},
       ]);
       // legend
       this.legend = this.graph.append('g').attr('class', 'topo-legend');

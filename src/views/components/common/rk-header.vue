@@ -1,15 +1,13 @@
-
+// 头部-1
 <template>
-  <!-- 头部 -->
-  <!-- <div>头部 - 1</div> -->
   <header class="rk-header flex-h">
     <div class="flex-h">
-      <svg class="svg-logo icon"
+      <!-- <svg class="svg-logo icon"
            style="margin-right:35px;margin-top:-5px">
         <use xlink:href="#logo-sw"></use>
       </svg>
-      <span class="grey rocketbot">哈哈哈</span>
-      <router-link v-for="(menu, index) in menus"
+      <span class="grey rocketbot">Primeton</span> -->
+      <!-- <router-link v-for="(menu, index) in menus"
                    :key="index"
                    :to="menu.path"
                    :exact="menu.meta.exact"
@@ -17,7 +15,7 @@
         <rk-icon size="sm"
                  :icon="menu.meta.icon" />
         <span class="vm hide-xs ml-5">{{ $t(menu.meta.title) }}</span>
-      </router-link>
+      </router-link> -->
     </div>
     <PageToolBar />
   </header>
@@ -50,13 +48,18 @@ export default class Header extends Vue {
   flex-shrink: 0;
   justify-content: space-between;
   height: 48px;
-  padding-right: 15px;
+  padding-right: 18px;
   padding-left: 15px;
   font-size: 13px;
   color: #efefef;
   z-index: 9;
-  background-color: #252a2f;
+  background-color: var(--main-bg);
   box-shadow: 0 1px 2px 0 rgba(26, 24, 29, 0.24);
+  border-left: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  height: 50px;
+  line-height: 50px;
+
   .svg-logo {
     width: 90px;
     height: 22px;

@@ -1,42 +1,62 @@
-
+// 服务监控 - 查询模块
 <template>
   <div class="rk-dashboard-bar flex-h">
-    <ToolBarBtns class="tool-btns"
+    <!-- 按钮组 -->
+    <!-- <ToolBarBtns class="tool-btns"
                  :rocketGlobal="rocketGlobal"
                  :rocketComps="rocketComps"
                  :compType="compType"
-                 :durationTime="durationTime" />
+                 :durationTime="durationTime" /> -->
+
     <div class="dashboard-selectors flex-h"
          v-if="compType === dashboardType.SERVICE">
-      <div class="flex-h">
-        <div class="sm grey service-search">
+      <div class="flex-h flex-1">
+
+        <!-- 服务组 -->
+        <!-- <div class="sm grey service-search">
           <div>{{ $t('serviceGroup') }}</div>
           <input type="text"
                  :value="rocketComps.tree[rocketComps.group].serviceGroup"
                  @change="searchServices($event.target.value)" />
-        </div>
+        </div> -->
+        <!-- 当前服务 -->
         <ToolBarSelect @onChoose="selectService"
-                       :title="$t('currentService')"
+                       title="服务"
                        :current="stateDashboard.currentService"
                        :data="stateDashboard.services"
                        icon="package" />
+
+        <!-- 实例 -->
+        <ToolBarSelect @onChoose="selectInstance"
+                       title="实例"
+                       :current="stateDashboard.currentInstance"
+                       :data="stateDashboard.instances"
+                       icon="disk" />
+
+        <!-- 应用 -->
+        <ToolBarSelect @onChoose="selectInstance"
+                       title="应用"
+                       :current="stateDashboard.currentInstance"
+                       :data="stateDashboard.instances"
+                       icon="disk" />
+
+        <!-- 当前端口 -->
         <ToolBarEndpointSelect @onChoose="selectEndpoint"
-                               :title="$t('currentEndpoint')"
+                               title="端口"
                                :current="stateDashboard.currentEndpoint"
                                :data="stateDashboard.endpoints"
                                :currentService="stateDashboard.currentService"
                                icon="code" />
-        <ToolBarSelect @onChoose="selectInstance"
-                       :title="$t('currentInstance')"
-                       :current="stateDashboard.currentInstance"
-                       :data="stateDashboard.instances"
-                       icon="disk" />
-        <a class="rk-view-instance-attributes r"
+
+        <!-- 实例属性 -->
+        <!-- <a class="rk-view-instance-attributes r"
            @click="() => (dialogAttributesVisible = true)"
            v-tooltip:bottom="{ content: $t('instanceAttributes') }">
-          <rk-icon icon="info_outline" />
-        </a>
-        <rk-sidebox width="600px"
+          <rk-icon icon="info_outline"
+                   style="width:18px;height:18px" />
+        </a> -->
+
+        <!-- <rk-sidebox width="600px"
                     :fixed="true"
                     :title="`${$t('instanceAttributes')} of ${stateDashboard.currentInstance.label}`"
                     :show.sync="dialogAttributesVisible"
@@ -46,13 +66,16 @@
                :key="attr.name + index">
             {{ attr.name + ' : ' + attr.value }}
           </div>
-        </rk-sidebox>
+        </rk-sidebox> -->
+
       </div>
-      <DashboardEvent :rocketComps="rocketComps"
+      <!-- 启动、停止事件 -->
+      <!-- <DashboardEvent :rocketComps="rocketComps"
                       :stateDashboard="stateDashboard"
                       :durationTime="durationTime"
-                      :type="pageEventsType.DASHBOARD_EVENTS" />
+                      :type="pageEventsType.DASHBOARD_EVENTS" /> -->
     </div>
+
     <div class="flex-h"
          v-else-if="compType === dashboardType.BROWSER">
       <ToolBarSelect @onChoose="selectService"
@@ -72,6 +95,7 @@
                              :currentService="stateDashboard.currentService"
                              icon="code" />
     </div>
+
     <div class="flex-h"
          v-else-if="compType === dashboardType.DATABASE">
       <ToolBarSelect @onChoose="SELECT_DATABASE"
@@ -200,13 +224,20 @@ export default class ToolBar extends Vue {
 
 <style lang="scss" scoped>
 .tool-btns {
-  height: 58px;
+  height: 52px;
+  margin-right: 10px;
 }
 .rk-dashboard-bar {
   flex-shrink: 0;
   color: #efefef;
-  background-color: #333840;
+  // background-color: #333840;
+  background-color: var(--header-bg);
+  border-left: 1px solid var(--border-color);
+  padding-left: 10px;
+  padding-right: 15px;
   .dashboard-selectors {
+    display: flex;
+    flex: 1;
     width: calc(100% - 150px);
     justify-content: space-between;
   }
@@ -219,7 +250,7 @@ export default class ToolBar extends Vue {
   }
   .service-search {
     padding: 0 5px;
-    border-right: 2px solid #252a2f;
+    border-right: 2px solid var(--border-color);
     input {
       border-style: unset;
       outline: 0;
@@ -234,7 +265,7 @@ export default class ToolBar extends Vue {
   .rk-view-instance-attributes {
     background-color: rgba(255, 255, 255, 0.07);
     border-radius: 4px;
-    margin-left: 5px;
+    margin-left: 10px;
     padding: 3px;
     color: #efefef;
   }

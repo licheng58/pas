@@ -96,7 +96,7 @@ export default class AlarmTool extends Vue {
 <style lang="scss" scoped>
 .rk-alarm-tool {
   border-bottom: 1px solid #c1c5ca41;
-  height: 52px;
+  height: 50px;
   background-color: #333840;
   padding: 0 15px;
   color: #efefef;

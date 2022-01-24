@@ -1,12 +1,12 @@
 
 <template>
   <nav class="rk-dashboard-nav">
-    <span v-for="(i, index) in rocketComps.tree[rocketComps.group] && rocketComps.tree[rocketComps.group].children"
+    <span v-for="(i, index) in newRocketComps"
           :key="index"
           class="mr-20">
       <a class="rk-dashboard-nav-i b"
-         @click="changeComps(index)"
-         :class="{ active: rocketComps.current == index }">{{
+         @click="changeComps(index+1)"
+         :class="{ active: rocketComps.current == index+1 }">{{
         i.name
       }}</a>
       <svg v-if="rocketGlobal.edit && rocketComps.current !== index"
@@ -15,6 +15,7 @@
         <use xlink:href="#file-deletion"></use>
       </svg>
     </span>
+
     <a class="rk-dashboard-nav-add mr-10"
        v-clickout="handleHide"
        v-if="rocketGlobal.edit">
@@ -33,7 +34,8 @@
            @click="handleCreate">{{ $t('confirm') }}</a>
       </div>
     </a>
-    <a class="rk-dashboard-import mr-10">
+
+    <!-- <a class="rk-dashboard-import mr-10">
       <input id="tool-nav-file"
              class="ipt"
              type="file"
@@ -46,17 +48,18 @@
         <rk-icon class="open vm"
                  icon="folder_open" />
       </label>
-    </a>
-    <a class="mr-10"
+    </a> -->
+
+    <!-- <a class="mr-10"
        @click="exportData">
       <rk-icon icon="save_alt" />
-    </a>
+    </a> -->
   </nav>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Getter, Mutation, Action } from 'vuex-class';
 import { readFile } from '@/utils/readFile';
 import { saveFile } from '@/utils/saveFile';
@@ -75,6 +78,24 @@ export default class ToolNav extends Vue {
   private name: string = '';
   private show: boolean = false;
   private dashboardType = DASHBOARDTYPE;
+
+  /**
+   * @Author licheng
+   * @Description 首页 服务监控数据 根据path判断
+   * @return
+   * @Date 2022-01-18
+   */
+  get newRocketComps() {
+    if (this.$route.path === '/home') {
+      this.$emit('changeCurrent', 0);
+      return this.rocketComps.tree[0].children.filter((v: any, idx: any) => idx === 0);
+    } else if (this.$route.path === '/') {
+      this.$emit('changeCurrent', 1);
+      return this.rocketComps.tree[0].children.filter((v: any, idx: any) => idx !== 0);
+    } else {
+      this.$emit('changeCurrent', 0);
+    }
+  }
 
   get type() {
     return this.rocketComps.tree[this.rocketComps.group].type;

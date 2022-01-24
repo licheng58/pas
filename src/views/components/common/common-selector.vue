@@ -1,52 +1,35 @@
-
 <template>
-  <div class="rk-common-select cp flex-h"
-       v-clickout="
+  <div class="rk-common-select cp flex-h" v-clickout="
       () => {
         visible = false;
         search = '';
       }
-    "
-       :class="{ active: visible }">
-    <div class="rk-common-bar-i flex-h"
-         @click="visible = !visible">
-      <rk-icon :icon="`${icon}`"
-               class="icon lg mr-15" />
+    " :class="{ active: visible }">
+    <div class="f-14 mr-10 grey max-c">{{ title }}</div>
+    <div class="rk-common-bar-i flex-h" @click="visible = !visible">
+      <rk-icon :icon="`${icon}`" class="icon lg mr-15" />
       <div class="mr-15 rk-common-bar-i-text">
-        <div class="sm grey">{{ title }}</div>
-        <div class="ell"
-             v-tooltip:right.ellipsis="value.label || ''">
+        <div class="ell" v-tooltip:right.ellipsis="value.label || ''">
           {{ value.label || '' }}
         </div>
       </div>
-      <svg class="icon lg trans"
-           :style="`transform: rotate(${visible ? 180 : 0}deg)`">
+      <svg class="icon lg trans" :style="`transform: rotate(${visible ? 180 : 0}deg)`">
         <use xlink:href="#arrow-down"></use>
       </svg>
     </div>
-    <div class="rk-common-sel"
-         v-if="visible">
+
+    <div class="rk-common-sel" v-if="visible">
       <div v-if="hasSearch">
-        <input type="text"
-               class="rk-common-sel-search"
-               v-model="search"
-               @change="fliterSearch"
-               placeholder="Search..." />
-        <svg class="icon sm close"
-             @click="
+        <input type="text" class="rk-common-sel-search" v-model="search" @change="fliterSearch" placeholder="Search..." />
+        <svg class="icon sm close" @click="
             search = '';
             fliterSearch();
-          "
-             v-if="search">
+          " v-if="search">
           <use xlink:href="#clear"></use>
         </svg>
       </div>
       <div class="rk-common-opt-wrapper scroll_bar_style">
-        <div class="rk-common-opt ell"
-             @click="handleSelect(i)"
-             :class="{ active: i.key === value.key }"
-             v-for="(i, idx) in filterData"
-             :key="idx">
+        <div class="rk-common-opt ell" @click="handleSelect(i)" :class="{ active: i.key === value.key }" v-for="(i, idx) in filterData" :key="idx">
           {{ i.label || '' }}
         </div>
       </div>
@@ -103,14 +86,18 @@ export default class CommonSelector extends Vue {
 }
 .rk-common-bar-i {
   height: 100%;
-  padding: 0 15px;
+  padding: 3px 10px;
+  background: #fff;
+  color: #000;
+  border-radius: 3px;
+  margin-right: 10px;
   border-right: 2px solid #252a2f;
 }
 .rk-common-sel {
   position: absolute;
-  top: 52px;
+  top: 32px;
   box-shadow: 0 1px 6px rgba(99, 99, 99, 0.2);
-  background-color: #252a2f;
+  background-color: var(--main-bg);
   width: 100%;
   border-radius: 3px;
   overflow: hidden;
@@ -134,7 +121,7 @@ export default class CommonSelector extends Vue {
 .rk-common-sel-search {
   width: calc(100% - 4px);
   border: 0;
-  background-color: #333840;
+  background-color: var(--main-bg);
   color: #eee;
   outline: 0;
   padding: 7px 25px 7px 10px;

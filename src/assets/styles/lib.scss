@@ -1,5 +1,4 @@
 
-
 .l {
   float: left;
 }
@@ -73,6 +72,12 @@
 .sm {
   font-size: 12px;
 }
+.f-14{
+  font-size: 14px;
+}
+.f-16{
+  font-size: 16px;
+}
 .green {
   color: #4caf50;
 }
@@ -89,7 +94,7 @@
   color: #fbb03b;
 }
 .grey {
-  color: #a7aebb;
+  color: #fff;
 }
 .bg-green {
   background-color: #4caf50;
@@ -177,4 +182,7 @@
 }
 .link-hover:hover {
   color: #448dfe;
+}
+.flex-1{
+  flex: 1;
 }

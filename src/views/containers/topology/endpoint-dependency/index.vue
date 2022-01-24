@@ -2,20 +2,9 @@
 <template>
   <div class="endpoint-dependency-page">
     <div class="rk-dashboard-bar flex-h">
-      <ToolBarSelect :selectable="false"
-                     :title="$t('currentService')"
-                     :current="current"
-                     icon="package" />
-      <ToolBarEndpointSelect @onChoose="selectEndpoint"
-                             :title="$t('currentEndpoint')"
-                             :current="stateDashboardOption.currentDependencyEndpoint"
-                             :data="stateDashboardOption.endpoints"
-                             icon="code" />
-      <ToolBarEndpointSelect @onChoose="selectDepth"
-                             :title="$t('currentDepth')"
-                             :current="rocketTopo.currentEndpointDepth"
-                             :data="depths"
-                             icon="code" />
+      <ToolBarSelect :selectable="false" :title="$t('currentService')" :current="current" icon="package" />
+      <ToolBarEndpointSelect @onChoose="selectEndpoint" :title="$t('currentEndpoint')" :current="stateDashboardOption.currentDependencyEndpoint" :data="stateDashboardOption.endpoints" icon="code" />
+      <ToolBarEndpointSelect @onChoose="selectDepth" :title="$t('currentDepth')" :current="rocketTopo.currentEndpointDepth" :data="depths" icon="code" />
     </div>
     <TopoEndpointDependency />
   </div>
@@ -95,7 +84,10 @@ export default class WindowEndpointDependency extends Vue {
 .rk-dashboard-bar {
   flex-shrink: 0;
   color: #efefef;
-  background-color: #333840;
-  border-bottom: 1px solid #252a2f;
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color);
+  padding: 0 15px;
+  // padding-left: 15px;
 }
 </style>

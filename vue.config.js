@@ -6,6 +6,7 @@ module.exports = {
       '/graphql': {
         // target: `${process.env.SW_PROXY_TARGET || 'http://127.0.0.1:12800'}`,
         target: `${process.env.SW_PROXY_TARGET || 'http://10.16.16.186:18088'}`,
+        // target: `${process.env.SW_PROXY_TARGET || 'http://192.168.7.102:8080'}`,
         changeOrigin: true,
       },
     },

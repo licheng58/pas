@@ -8,13 +8,21 @@
                icon="settings"
                v-tooltip:left="{ content: $t('setEvent') }" />
     </div>
+
     <div class="rk-dashboard-tool-btn"
          @click="setEnbleEvents">
-      <rk-icon class="lg"
+      <!-- <rk-icon class="lg"
                :class="enableEvents ? 'blue' : ''"
-               icon="format_indent_increase"
-               v-tooltip:left="{ content: enableEvents ? $t('disableEvents') : $t('enableEvents') }" />
+               icon="icon-kaishi"
+               v-tooltip:left="{ content: enableEvents ? $t('disableEvents') : $t('enableEvents') }" /> -->
+
+      <svg class="icon"
+           style="width:18px;height:18px"
+           v-tooltip:left="{ content: enableEvents ? $t('disableEvents') : $t('enableEvents') }">
+        <use :xlink:href="!enableEvents?'#start':'#stop'"></use>
+      </svg>
     </div>
+
     <rk-sidebox width="1000px"
                 :destroyOnClose="true"
                 :show.sync="dialogEventVisible"
@@ -128,6 +136,7 @@
              @click="updateEvents">{{ $t('setEvent') }}</div>
       </div>
     </rk-sidebox>
+
     <rk-sidebox :width="'1000px'"
                 :show.sync="showEventDetail"
                 :title="$t('eventDetail')">

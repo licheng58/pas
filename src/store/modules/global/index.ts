@@ -1,5 +1,3 @@
-
-
 import * as types from '@/store/mutation-types';
 import { Duration, DurationTime } from '@/types/global';
 import getDurationRow from '@/utils/datetime';

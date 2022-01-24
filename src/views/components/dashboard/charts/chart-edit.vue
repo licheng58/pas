@@ -3,243 +3,180 @@
 <template>
   <div class="rk-chart-edit">
     <div class="rk-chart-edit-container">
+      <!-- 标题 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('title') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.title"
-               @change="setItemConfig({ type: 'title', value: $event.target.value })" />
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.title" @change="setItemConfig({ type: 'title', value: $event.target.value })" disabled />
       </div>
+
+      <!-- 指标 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('metrics') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.metricName"
-               @change="setItemConfig({ type: 'metricName', value: $event.target.value })" />
-        <select class="long"
-                v-model="itemConfig.queryMetricType"
-                @change="setItemConfig({ type: 'queryMetricType', value: $event.target.value })">
-          <option v-for="query in queryMetricTypesList"
-                  :value="query.value"
-                  :key="query.value">{{ query.label }}
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.metricName" @change="setItemConfig({ type: 'metricName', value: $event.target.value })" disabled />
+        <select class="long cn" v-model="itemConfig.queryMetricType" @change="setItemConfig({ type: 'queryMetricType', value: $event.target.value })" disabled>
+          <option v-for="query in queryMetricTypesList" :value="query.value" :key="query.value">{{ query.label }}
           </option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="isChartType">
+
+      <!-- 图表类型 -->
+      <div class="flex-h mb-5" v-show="isChartType">
         <div class="title grey sm">{{ $t('chartType') }}:</div>
-        <select class="long"
-                v-model="itemConfig.chartType"
-                @change="setItemConfig({ type: 'chartType', value: $event.target.value })">
-          <option v-for="chart in chartTypeOptions"
-                  :value="chart.value"
-                  :key="chart.value">
+        <select class="long cn" v-model="itemConfig.chartType" @change="setItemConfig({ type: 'chartType', value: $event.target.value })" disabled>
+          <option v-for="chart in chartTypeOptions" :value="chart.value" :key="chart.value">
             {{ chart.label }}
           </option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="isLabel">
+
+      <!-- 标签 -->
+      <div class="flex-h mb-5" v-show="isLabel">
         <div class="title grey sm">{{ $t('labels') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.metricLabels"
-               @change="setItemConfig({ type: 'metricLabels', value: $event.target.value })" />
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.metricLabels" @change="setItemConfig({ type: 'metricLabels', value: $event.target.value })" disabled />
       </div>
-      <div class="flex-h mb-5"
-           v-show="isLabel">
+
+      <!-- 标签下标 -->
+      <div class="flex-h mb-5" v-show="isLabel">
         <div class="title grey sm">{{ $t('labelsIndex') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.labelsIndex"
-               @change="setItemConfig({ type: 'labelsIndex', value: $event.target.value })" />
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.labelsIndex" @change="setItemConfig({ type: 'labelsIndex', value: $event.target.value })" disabled />
       </div>
-      <div class="flex-h mb-5"
-           v-show="!noEntity">
+
+      <!-- 实体类型 -->
+      <div class="flex-h mb-5" v-show="!noEntity">
         <div class="title grey sm">{{ $t('entityType') }}:</div>
-        <select class="long"
-                v-model="itemConfig.entityType"
-                @change="setItemConfig({ type: 'entityType', value: $event.target.value })">
-          <option v-for="type in EntityType"
-                  :value="type.key"
-                  :key="type.key">{{ type.label }}</option>
+        <select class="long cn" v-model="itemConfig.entityType" @change="setItemConfig({ type: 'entityType', value: $event.target.value })" disabled>
+          <option v-for="type in EntityType" :value="type.key" :key="type.key">{{ type.label }}</option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="itemConfig.independentSelector && isDatabase">
+
+      <!-- 当前数据库 -->
+      <div class="flex-h mb-5" v-show="itemConfig.independentSelector && isDatabase">
         <div class="title grey sm">{{ $t('currentDatabase') }}:</div>
-        <select class="long"
-                v-model="itemConfig.currentDatabase"
-                @change="setItemConfig({ type: 'currentDatabase', value: $event.target.value })">
-          <option v-for="database in stateDashboardOption.databases"
-                  :value="database.label"
-                  :key="database.key">{{ database.label }}
+        <select class="long cn" v-model="itemConfig.currentDatabase" @change="setItemConfig({ type: 'currentDatabase', value: $event.target.value })" disabled>
+          <option v-for="database in stateDashboardOption.databases" :value="database.label" :key="database.key">{{ database.label }}
           </option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="
+
+      <!-- 当前服务 -->
+      <div class="flex-h mb-5" v-show="
           itemConfig.entityType !== EntityType[1].key && itemConfig.independentSelector && !isDatabase && !isBrowser
         ">
         <div class="title grey sm">{{ $t('currentService') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.servicesKey"
-               @change="setItemConfig({ type: 'servicesKey', value: $event.target.value })" />
-        <select class="long"
-                v-model="itemConfig.currentService"
-                @change="setItemConfig({ type: 'currentService', value: $event.target.value })">
-          <option v-for="service in services"
-                  :value="service.label"
-                  :key="service.key">
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.servicesKey" @change="setItemConfig({ type: 'servicesKey', value: $event.target.value })" disabled />
+        <select class="long cn" v-model="itemConfig.currentService" @change="setItemConfig({ type: 'currentService', value: $event.target.value })" disabled>
+          <option v-for="service in services" :value="service.label" :key="service.key">
             {{ service.label }}
           </option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="
+
+      <!-- 当前端点 -->
+      <div class="flex-h mb-5" v-show="
           itemConfig.entityType === EntityType[2].key && itemConfig.independentSelector && !isDatabase && !isBrowser
         ">
         <div class="title grey sm">{{ $t('currentEndpoint') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.endpointsKey"
-               @change="setItemConfig({ type: 'endpointsKey', value: $event.target.value })" />
-        <select class="long"
-                v-model="itemConfig.currentEndpoint"
-                @change="setItemConfig({ type: 'currentEndpoint', value: $event.target.value })">
-          <option v-for="endpoint in endpoints"
-                  :value="endpoint.label"
-                  :key="endpoint.key">{{ endpoint.label }}
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.endpointsKey" @change="setItemConfig({ type: 'endpointsKey', value: $event.target.value })" disabled />
+        <select class="long cn" v-model="itemConfig.currentEndpoint" @change="setItemConfig({ type: 'currentEndpoint', value: $event.target.value })" disabled>
+          <option v-for="endpoint in endpoints" :value="endpoint.label" :key="endpoint.key">{{ endpoint.label }}
           </option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="
+
+      <!-- 当前实例 -->
+      <div class="flex-h mb-5" v-show="
           itemConfig.entityType === EntityType[3].key && itemConfig.independentSelector && !isDatabase && !isBrowser
         ">
         <div class="title grey sm">{{ $t('currentInstance') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.instancesKey"
-               @change="setItemConfig({ type: 'instancesKey', value: $event.target.value })" />
-        <select class="long"
-                v-model="itemConfig.currentInstance"
-                @change="setItemConfig({ type: 'currentInstance', value: $event.target.value })">
-          <option v-for="instance in instances"
-                  :value="instance.label"
-                  :key="instance.key">{{ instance.label }}
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.instancesKey" @change="setItemConfig({ type: 'instancesKey', value: $event.target.value })" disabled />
+        <select class="long cn" v-model="itemConfig.currentInstance" @change="setItemConfig({ type: 'currentInstance', value: $event.target.value })" disabled>
+          <option v-for="instance in instances" :value="instance.label" :key="instance.key">{{ instance.label }}
           </option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="hasIndependentSelector">
+
+      <!-- 独立选择器 -->
+      <div class="flex-h mb-5" v-show="hasIndependentSelector">
         <div class="title grey sm">{{ $t('independentSelector') }}:</div>
-        <select class="long"
-                v-model="itemConfig.independentSelector"
-                @change="setItemConfig({ type: 'independentSelector', value: $event.target.value })">
-          <option v-for="type in IndependentType"
-                  :value="type.key"
-                  :key="type.key">{{ type.label }}</option>
+        <select class="long cn" v-model="itemConfig.independentSelector" @change="setItemConfig({ type: 'independentSelector', value: $event.target.value })" disabled>
+          <option v-for="type in IndependentType" :value="type.key" :key="type.key">{{ type.label }}</option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="isChartSlow">
+
+      <!-- 父级服务 -->
+      <div class="flex-h mb-5" v-show="isChartSlow">
         <div class="title grey sm">{{ $t('parentService') }}:</div>
-        <select class="long"
-                v-model="itemConfig.parentService"
-                @change="setItemConfig({ type: 'parentService', value: $event.target.value })">
+        <select class="long cn" v-model="itemConfig.parentService" @change="setItemConfig({ type: 'parentService', value: $event.target.value })" disabled>
           <option :value="true">{{ $t('isParentService') }}</option>
           <option :value="false">{{ $t('noneParentService') }}</option>
         </select>
       </div>
-      <div class="flex-h mb-5"
-           v-show="isChartSlow">
+
+      <!-- 排序方式 -->
+      <div class="flex-h mb-5" v-show="isChartSlow">
         <div class="title grey sm">{{ $t('sortOrder') }}:</div>
-        <select class="long"
-                v-model="itemConfig.sortOrder"
-                @change="setItemConfig({ type: 'sortOrder', value: $event.target.value })">
+        <select class="long cn" v-model="itemConfig.sortOrder" @change="setItemConfig({ type: 'sortOrder', value: $event.target.value })" disabled>
           <option :value="'DES'">{{ $t('descendOrder') }}</option>
           <option :value="'ASC'">{{ $t('increaseOrder') }}</option>
         </select>
       </div>
+
+      <!-- 单位 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('unit') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.unit"
-               @change="setItemConfig({ type: 'unit', value: $event.target.value })" />
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.unit" @change="setItemConfig({ type: 'unit', value: $event.target.value })" disabled />
       </div>
+
+      <!-- 宽度 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('width') }}:</div>
-        <input type="number"
-               min="1"
-               max="12"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.width"
-               @change="setItemConfig({ type: 'width', value: $event.target.value })" />
+        <input type="number" min="1" max="12" class="rk-chart-edit-input long" :value="itemConfig.width" @change="setItemConfig({ type: 'width', value: $event.target.value })" />
       </div>
+
+      <!-- 高度 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('height') }}:</div>
-        <input type="number"
-               min="1"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.height"
-               @change="setItemConfig({ type: 'height', value: $event.target.value })" />
+        <input type="number" min="1" class="rk-chart-edit-input long" :value="itemConfig.height" @change="setItemConfig({ type: 'height', value: $event.target.value })" />
       </div>
-      <div class="flex-h mb-5"
-           v-show="isChartSlow">
+
+      <!-- 最多条目数 -->
+      <div class="flex-h mb-5" v-show="isChartSlow">
         <div class="title grey sm">{{ $t('maxItemNum') }}:</div>
-        <input type="number"
-               min="1"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.maxItemNum"
-               @change="setItemConfig({ type: 'maxItemNum', value: $event.target.value })" />
+        <input type="number" min="1" class="rk-chart-edit-input long" :value="itemConfig.maxItemNum" @change="setItemConfig({ type: 'maxItemNum', value: $event.target.value })" />
       </div>
+
+      <!-- 数据计算 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('aggregation') }}:</div>
-        <select class="long"
-                v-model="itemConfig.aggregation"
-                @change="setItemConfig({ type: 'aggregation', value: $event.target.value })">
-          <option v-for="type in CalculationType"
-                  :value="type.value"
-                  :key="type.value">{{ type.label }} </option>
+        <select class="long cn" v-model="itemConfig.aggregation" @change="setItemConfig({ type: 'aggregation', value: $event.target.value })" disabled>
+          <option v-for="type in CalculationType" :value="type.value" :key="type.value">{{ type.label }} </option>
         </select>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="itemConfig.aggregationNum"
-               @change="setItemConfig({ type: 'aggregationNum', value: $event.target.value })" />
+        <input type="text" class="rk-chart-edit-input long cn" :value="itemConfig.aggregationNum" @change="setItemConfig({ type: 'aggregationNum', value: $event.target.value })" disabled />
       </div>
-      <div class="flex-h mb-5"
-           v-show="itemConfig.chartType === ChartTable">
+
+      <!-- 表头名称 -->
+      <div class="flex-h mb-5" v-show="itemConfig.chartType === ChartTable">
         <div class="title grey sm">{{ $t('tableHeader') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               placeholder="col-1"
-               :value="itemConfig.tableHeaderCol1"
-               @change="setItemConfig({ type: 'tableHeaderCol1', value: $event.target.value })" />
-        <input type="text"
-               class="rk-chart-edit-input long"
-               placeholder="col-2"
-               :value="itemConfig.tableHeaderCol2"
-               @change="setItemConfig({ type: 'tableHeaderCol2', value: $event.target.value })" />
+        <input type="text" class="rk-chart-edit-input long cn" placeholder="col-1" :value="itemConfig.tableHeaderCol1" @change="setItemConfig({ type: 'tableHeaderCol1', value: $event.target.value })"
+          disabled />
+        <input type="text" class="rk-chart-edit-input long cn" placeholder="col-2" :value="itemConfig.tableHeaderCol2" @change="setItemConfig({ type: 'tableHeaderCol2', value: $event.target.value })"
+          disabled />
       </div>
-      <div class="flex-h mb-5"
-           v-show="itemConfig.chartType === ChartTable">
+
+      <!-- 表值 -->
+      <div class="flex-h mb-5" v-show="itemConfig.chartType === ChartTable">
         <div class="title grey sm">{{ $t('tableValues') }}:</div>
-        <select class="long"
-                v-model="itemConfig.showTableValues"
-                @change="setItemConfig({ type: 'showTableValues', value: $event.target.value })">
+        <select class="long cn" v-model="itemConfig.showTableValues" @change="setItemConfig({ type: 'showTableValues', value: $event.target.value })" disabled>
           <option :value="true">{{ $t('show') }}</option>
           <option :value="false">{{ $t('hide') }}</option>
         </select>
       </div>
+
+      <!-- 提示内容 -->
       <div class="flex-h mb-5">
         <div class="title grey sm">{{ $t('tooltipsContent') }}:</div>
-        <input type="text"
-               class="rk-chart-edit-input long"
-               :value="decodeURIComponent(itemConfig.tipsContent)"
-               @change="setItemConfig({ type: 'tipsContent', value: encodeURIComponent($event.target.value) })" />
+        <input type="text" class="rk-chart-edit-input long cn" :value="decodeURIComponent(itemConfig.tipsContent)"
+          @change="setItemConfig({ type: 'tipsContent', value: encodeURIComponent($event.target.value) })" disabled />
       </div>
     </div>
   </div>
@@ -599,7 +536,7 @@ export default class ChartEdit extends Vue {
 
   select {
     margin: 0;
-    height: 30px;
+    height: 26px;
     border: 1px solid #ddd;
     background-color: #fff;
     outline: none;
@@ -623,5 +560,9 @@ export default class ChartEdit extends Vue {
   padding: 4px 10px;
   border-radius: 3px;
   border: 1px solid #ddd;
+}
+
+.grey {
+  color: #000;
 }
 </style>

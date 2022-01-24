@@ -1,21 +1,10 @@
-<!-- Licensed to the Apache Software Foundation (ASF) under one or more
-contributor license agreements.  See the NOTICE file distributed with
-this work for additional information regarding copyright ownership.
-The ASF licenses this file to You under the Apache License, Version 2.0
-(the "License"); you may not use this file except in compliance with
-the License.  You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. -->
 
 <template>
   <div class="micro-radil-chart">
-    <RkEcharts height="100%" :option="responseConfig" ref="radial" />
+    <RkEcharts height="100%"
+               :option="responseConfig"
+               ref="radial" />
   </div>
 </template>
 <script lang="js">
@@ -119,19 +108,19 @@ limitations under the License. -->
   };
 </script>
 <style lang="scss" scoped>
-  .micro-radil-chart {
-    height: 100%;
-    position: fixed;
-    top: 48px;
-    background-color: #333840;
-    width: 100%;
-    z-index: 100;
-    text-align: center;
-  }
-  .micro-radil-chart-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 99;
-  }
+.micro-radil-chart {
+  height: 100%;
+  position: fixed;
+  top: 48px;
+  background-color: #333840;
+  width: 100%;
+  z-index: 100;
+  text-align: center;
+}
+.micro-radil-chart-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 99;
+}
 </style>

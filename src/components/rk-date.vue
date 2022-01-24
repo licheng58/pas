@@ -4,7 +4,8 @@
        :class="{
       'datepicker-range': range,
       datepicker__clearable: clearable && text && !disabled,
-    }">
+    }"
+       style="fontSize:14px">
     <!-- <svg class="icon datepicker-icon">
     <use xlink:href="#timer"></use>
   </svg> -->
@@ -344,11 +345,11 @@
   height: 28px;
   box-sizing: border-box;
   outline: none;
-  padding: 0 5px;
+  // padding: 0 5px;
   width: 100%;
   user-select: none;
   font-family: Monaco;
-  letter-spacing: -0.7px;
+  // letter-spacing: -0.7px;
 }
 
 // .datepicker > input.focus {
@@ -435,7 +436,7 @@
 }
 
 .datepicker-range {
-  min-width: 238px;
+  min-width: 280px;
 }
 
 .datepicker-range .datepicker-popup {

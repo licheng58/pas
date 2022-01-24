@@ -1,33 +1,20 @@
 
 <template>
-  <div class="flex-h"
-       :class="{ light: theme === 'light' }">
+  <div class="flex-h" :class="{ light: theme === 'light' }">
     <div class="mr-10 pt-5">
-      <span class="sm grey"
-            v-show="theme === 'dark'">{{ $t('tags') }}: </span>
-      <span class="rk-trace-tags"
-            :style="type === 'LOG' ? `min-width: 122px;` : ''">
-        <span class="selected"
-              v-for="(item, index) in tagsList"
-              :key="index">
+      <span class="sm grey" v-show="theme === 'dark'" style="margin-right:12px">{{ $t('tags') }}: </span>
+      <span class="rk-trace-tags" :style="type === 'LOG' ? `min-width: 122px;` : ''">
+        <span class="selected" v-for="(item, index) in tagsList" :key="index">
           <span>{{ item }}</span>
-          <span class="remove-icon"
-                @click="removeTags(index)">×</span>
+          <span class="remove-icon" @click="removeTags(index)">×</span>
         </span>
       </span>
-      <input type="text"
-             :placeholder="$t('addTag')"
-             v-model="tags"
-             class="rk-trace-new-tag"
-             @keyup="addLabels" />
-      <span class="tags-tip"
-            v-tooltip:bottom="{ content: $t('traceTagsTip') }">
-        <a target="blank"
-           href="https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/configuration-vocabulary.md">
+      <input type="text" :placeholder="$t('addTag')" v-model="tags" class="rk-trace-new-tag" @keyup="addLabels" />
+      <span class="tags-tip" v-tooltip:bottom="{ content: $t('traceTagsTip') }">
+        <a target="blank" href="https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/configuration-vocabulary.md">
           {{ $t('tagsLink') }}
         </a>
-        <rk-icon icon="help"
-                 class="mr-5" />
+        <rk-icon icon="help" class="mr-5" />
         <b v-if="type === 'TRACE'">{{ $t('noticeTag') }}</b>
       </span>
     </div>
@@ -117,7 +104,7 @@ export default class ConditionTags extends Vue {
   outline: 0;
   padding: 2px 5px;
   border-radius: 3px;
-  width: 250px;
+  width: 168px;
   margin-right: 3px;
 }
 .remove-icon {

@@ -1,5 +1,5 @@
 
-
+/* tslint:disable */
 export const TypeOfMetrics = {
   variable: '$name: String!',
   query: `typeOfMetrics(name: $name)`,
@@ -15,6 +15,11 @@ export const getAllTemplates = {
       disabled,
     }
   `,
+};
+
+export const queryTest = {
+  variable: ['$condition: TestQueryCondition'],
+  query: `queryTest(condition: $condition) {id name}`,  
 };
 
 export const fetchEvents = {

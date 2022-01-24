@@ -1,5 +1,6 @@
 
-
+/* eslint-disable */
+  /* tslint:disable */
 import Vue from 'vue';
 import moment from 'dayjs';
 import clickout from '@/utils/clickout';
@@ -22,10 +23,16 @@ import 'echarts/lib/component/markArea';
 import VModal from 'vue-js-modal';
 import { queryOAPTimeInfo } from './utils/localtime';
 import './assets';
-// import "primeton-ui/lib/style/main.css";
-// import PrimetonUI from "primeton-ui";
+import './assets/fonts/iconfont.css'
+import './assets/styles/p-common.scss'
+// import 'primeton-ui/lib/style/main.css';
+// import PrimetonUI from 'primeton-ui';
 
 // Vue.use(PrimetonUI);
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
 Vue.use(eventBus);
 Vue.use(components);
 Vue.use(VModal, { dialog: true });

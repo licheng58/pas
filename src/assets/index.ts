@@ -48,5 +48,5 @@ import './svg/unlink.svg';
 import './svg/user.svg';
 import './svg/warning.svg';
 import './svg/sort.svg';
-
-import './svg/test.svg';
+import './svg/start.svg';
+import './svg/stop.svg';

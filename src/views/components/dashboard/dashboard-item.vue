@@ -1,68 +1,38 @@
-
+// 服务监控主体模块
 <template>
-  <div class="rk-dashboard-item"
-       :class="`g-sm-${width}`"
-       :style="`height:${height}px;`"
-       v-if="itemConfig.entityType">
+  <div class="rk-dashboard-item" :class="`g-sm-${width}`" :style="`height:${height}px;`" v-if="itemConfig.entityType&&titleList.indexOf(title)===-1">
+
+    <!-- 图标头部 -->
     <div class="rk-dashboard-item-title">
-      <span v-show="rocketGlobal.edit || stateTopo.editDependencyMetrics"
-            @click="deleteItem(index, itemConfig.uuid)">
-        <rk-icon class="r edit red"
-                 icon="file-deletion" />
+      <span v-show="rocketGlobal.edit || stateTopo.editDependencyMetrics" @click="deleteItem(index, itemConfig.uuid)">
+        <rk-icon class="r edit red" icon="file-deletion" />
       </span>
       <span>{{ title }}</span>
       <span v-show="unit"> ( {{ unit }} ) </span>
-      <span v-show="status === 'UNKNOWN'"
-            class="item-status">( {{ $t('unknownMetrics') }} )</span>
-      <span v-show="!rocketGlobal.edit && !stateTopo.editDependencyMetrics && !noEditTypes.includes(type)"
-            @click="editComponentConfig">
-        <rk-icon class="r edit"
-                 icon="keyboard_control"
-                 v-tooltip:bottom="{ content: $t('editConfig') }" />
+      <span v-show="status === 'UNKNOWN'" class="item-status">( {{ $t('unknownMetrics') }} )</span>
+      <span v-show="!rocketGlobal.edit && !stateTopo.editDependencyMetrics && !noEditTypes.includes(type)" @click="editComponentConfig">
+        <rk-icon class="r edit" icon="keyboard_control" v-tooltip:bottom="{ content: $t('editConfig') }" />
       </span>
-      <span v-show="!rocketGlobal.edit && stateTopo.editDependencyMetrics && itemConfig.chartType === 'ChartTable'"
-            @click="copyTable">
-        <rk-icon class="r cp"
-                 icon="review-list" />
+      <span v-show="!rocketGlobal.edit && stateTopo.editDependencyMetrics && itemConfig.chartType === 'ChartTable'" @click="copyTable">
+        <rk-icon class="r cp" icon="review-list" />
       </span>
-      <span v-if="tips"
-            class="r edit tipsContent"
-            @mouseenter="showTips = true"
-            @mouseleave="showTips = false">
+      <span v-if="tips" class="r edit tipsContent" @mouseenter="showTips = true" @mouseleave="showTips = false">
         <rk-icon icon="info_outline" />
         <div v-show="showTips">{{ decodeURIComponent(tips) }}</div>
       </span>
     </div>
-    <div class="rk-dashboard-item-body"
-         ref="chartBody">
+
+    <!-- 图标区域 -->
+    <div class="rk-dashboard-item-body" ref="chartBody">
       <div style="height:100%;width:100%">
-        <component :is="rocketGlobal.edit || stateTopo.editDependencyMetrics ? 'ChartEdit' : itemConfig.chartType"
-                   ref="chart"
-                   :item="itemConfig"
-                   :index="index"
-                   :intervalTime="intervalTime"
-                   :data="chartSource"
-                   :type="type"
-                   :itemEvents="itemEvents"
-                   :theme="theme"
-                   @updateStatus="(type, value) => setStatus(type, value)"></component>
+        <component :is="rocketGlobal.edit || stateTopo.editDependencyMetrics ? 'ChartEdit' : itemConfig.chartType" ref="chart" :item="itemConfig" :index="index" :intervalTime="intervalTime"
+          :data="chartSource" :type="type" :itemEvents="itemEvents" :theme="theme" @updateStatus="(type, value) => setStatus(type, value)"></component>
       </div>
     </div>
-    <rk-sidebox width="70%"
-                :fixed="true"
-                :right="theme === 'dark'"
-                :title="$t('editConfig')"
-                :show.sync="dialogConfigVisible"
-                @closeSideboxCallback="chartRender">
+
+    <rk-sidebox width="70%" :fixed="true" :right="theme === 'dark'" :title="$t('editConfig')" :show.sync="dialogConfigVisible" @closeSideboxCallback="chartRender">
       <div class="config-box">
-        <component :is="'ChartEdit'"
-                   ref="chart"
-                   :item="itemConfig"
-                   :index="index"
-                   :intervalTime="intervalTime"
-                   :data="chartSource"
-                   :theme="theme"
-                   :type="type"></component>
+        <component :is="'ChartEdit'" ref="chart" :item="itemConfig" :index="index" :intervalTime="intervalTime" :data="chartSource" :theme="theme" :type="type"></component>
       </div>
     </rk-sidebox>
   </div>
@@ -72,7 +42,6 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { Mutation, State, Getter, Action } from 'vuex-class';
 import charts from './charts';
 import dayjs from 'dayjs';
-
 import { QueryTypes, UpdateDashboardEvents } from './constant';
 import { TopologyType } from '@/constants/constant';
 import { CalculationType } from './charts/constant';
@@ -127,10 +96,23 @@ export default class DashboardItem extends Vue {
     TopologyType.TOPOLOGY_ENDPOINT_DEPENDENCY,
   ] as string[];
   private showTips: boolean = false;
+  private titleList = [
+    'Message Queue Consuming Count',
+    'Message Queue Avg Consuming Latency',
+    'CLR CPU  (.NET Service)',
+    'CLR GC (.NET Service)',
+    'CLR Heap Memory (.NET Service)',
+    'CLR Thread (.NET Service)',
+    'Endpoint Load in Current Service',
+    'Slow Endpoints in Current Service',
+    'Successful Rate in Current Service',
+  ];
 
   private created() {
     this.status = this.item.metricType;
     this.title = this.item.title;
+    // console.log(this.item.title);
+
     this.tips = this.item.tips ? encodeURIComponent(this.item.tips) : '';
     this.width = this.item.width;
     this.height = this.item.height;

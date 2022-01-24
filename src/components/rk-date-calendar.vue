@@ -4,9 +4,11 @@
     <div :class="`${pre}-head`">
       <a :class="`${pre}-prev-decade-btn`"
          v-show="showYears"
-         @click="year -= 10"><svg class="icon sm cp">
+         @click="year -= 10">
+        <svg class="icon sm cp">
           <use xlink:href="#angle-double-left"></use>
-        </svg></a>
+        </svg>
+      </a>
       <a :class="`${pre}-prev-year-btn`"
          v-show="!showYears"
          @click="year--"><svg class="icon sm cp">

@@ -2,17 +2,16 @@
 
 <template>
   <nav class="rk-alarm-tool flex-h">
-    <div class="mr-10"
+    <div class="mr-10  rk-alarm-tool-div"
          style="padding: 3px 15px 0">
-      <div class="sm grey">{{ $t('searchKeyword') }}</div>
+      <div class="mr-10 grey f-14">关键字搜索 :</div>
       <input type="text"
              disabled
              v-model="keyword"
              class="rk-alarm-tool-input"
              @input="handleFetch(1)" />
     </div>
-    <RkPage class="mt-15"
-            :currentSize="20"
+    <RkPage :currentSize="20"
             :currentPage="pageNum"
             @changePage="(pageNum) => handleFetch(pageNum)"
             :total="total" />
@@ -61,8 +60,8 @@ export default class AlarmTool extends Vue {
 <style lang="scss" scoped>
 .rk-alarm-tool {
   border-bottom: 1px solid #c1c5ca41;
-  height: 52px;
-  background-color: #333840;
+  height: 50px;
+  background-color: var(--main-bg);
   padding: 0 15px;
   color: #efefef;
   flex-shrink: 0;
@@ -71,7 +70,13 @@ export default class AlarmTool extends Vue {
 .rk-alarm-tool-input {
   border-style: unset;
   outline: 0;
-  padding: 2px 5px;
+  padding: 5px 10px;
+  color: #000;
   border-radius: 3px;
+  background: #fff;
+}
+
+.rk-alarm-tool-div {
+  display: flex;
 }
 </style>

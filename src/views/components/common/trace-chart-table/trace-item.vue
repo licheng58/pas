@@ -1,4 +1,5 @@
 
+
 <template>
   <div v-if="type === 'statistics'">
     <div :class="['trace-item']"

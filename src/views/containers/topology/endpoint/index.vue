@@ -2,28 +2,19 @@
 <template>
   <div>
     <div class="rk-dashboard-bar flex-h">
-      <span class="flex-h">
+      <!-- <span class="flex-h">
         <div class="rk-dashboard-bar-btn">
           <span v-tooltip:bottom="{ content: rocketGlobal.edit ? 'view' : 'edit' }">
-            <svg class="icon lg vm cp rk-btn ghost"
-                 :style="`color:${!rocketGlobal.edit ? '' : '#ffc107'}`"
-                 @click="() => SET_EDIT(!rocketGlobal.edit)">
+            <svg class="icon lg vm cp rk-btn ghost" :style="`color:${!rocketGlobal.edit ? '' : '#ffc107'}`" @click="() => SET_EDIT(!rocketGlobal.edit)">
               <use :xlink:href="!rocketGlobal.edit ? '#lock' : '#lock-open'"></use>
             </svg>
           </span>
         </div>
         <div class="rk-dashboard-bar-btn">
           <span v-tooltip:bottom="{ content: 'import' }">
-            <input id="endpoint-file"
-                   type="file"
-                   name="file"
-                   title=""
-                   accept=".json"
-                   @change="importData" />
-            <label class="rk-btn ghost input-label"
-                   for="endpoint-file">
-              <svg class="icon lg vm cp "
-                   :style="`marginTop: 0px`">
+            <input id="endpoint-file" type="file" name="file" title="" accept=".json" @change="importData" />
+            <label class="rk-btn ghost input-label" for="endpoint-file">
+              <svg class="icon lg vm cp " :style="`marginTop: 0px`">
                 <use :xlink:href="'#folder_open'"></use>
               </svg>
             </label>
@@ -31,42 +22,26 @@
         </div>
         <div class="rk-dashboard-bar-btn">
           <span v-tooltip:bottom="{ content: 'export' }">
-            <svg class="icon lg vm cp rk-btn ghost"
-                 @click="exportData">
+            <svg class="icon lg vm cp rk-btn ghost" @click="exportData">
               <use :xlink:href="'#save_alt'"></use>
             </svg>
           </span>
         </div>
-      </span>
+      </span> -->
       <div class="rk-dashboard-bar-tool flex-h">
         <div class="flex-h">
-          <ToolBarSelect :selectable="false"
-                         :title="$t('currentService')"
-                         :current="current"
-                         icon="package" />
-          <ToolBarEndpointSelect @onChoose="selectEndpoint"
-                                 :title="$t('currentEndpoint')"
-                                 :current="stateDashboardOption.currentEndpoint"
-                                 :data="stateDashboardOption.endpoints"
-                                 icon="code" />
+          <!-- <ToolBarSelect :selectable="false" :title="$t('currentService')" :current="current" icon="package" /> -->
+          <div style="margin-right:15px"><span>当前服务 : </span>{{current.label}}</div>
+          <ToolBarEndpointSelect @onChoose="selectEndpoint" :title="$t('currentEndpoint')" :current="stateDashboardOption.currentEndpoint" :data="stateDashboardOption.endpoints" icon="code" />
           <div class="pl-10 pb-5 flex-h">
-            <div class="type grey">{{ $t('templateType') }}</div>
-            <RkSelect class="content grey"
-                      :mode="'multiple'"
-                      :current="currentType"
-                      :data="templateTypesList"
-                      :theme="'dark'"
-                      @onChoose="(item) => changeTemplatesType(item)" />
+            <div class="grey mr-10">{{ $t('templateType') }} : </div>
+            <RkSelect class=" grey" :mode="'multiple'" :current="currentType" :data="templateTypesList" :theme="'dark'" @onChoose="(item) => changeTemplatesType(item)" />
           </div>
         </div>
-        <DashboardEvent :rocketComps="rocketComps"
-                        :stateDashboard="stateDashboardOption"
-                        :durationTime="durationTime"
-                        :type="pageEventsType.TOPO_ENDPOINT_EVENTS" />
+        <!-- <DashboardEvent :rocketComps="rocketComps" :stateDashboard="stateDashboardOption" :durationTime="durationTime" :type="pageEventsType.TOPO_ENDPOINT_EVENTS" /> -->
       </div>
     </div>
-    <endpoints-survey :currentType="currentType"
-                      ref="survey" />
+    <endpoints-survey :currentType="currentType" ref="survey" />
   </div>
 </template>
 
@@ -240,12 +215,14 @@ export default class WindowEndpoint extends Vue {
 .rk-dashboard-bar {
   flex-shrink: 0;
   color: #efefef;
-  background-color: #333840;
+  background-color: var(--header-bg);
+  border-left: 1px solid var(--border-color);
+  padding-left: 15px;
 }
 .rk-dashboard-bar-btn {
   padding: 0 5px;
-  border-right: 2px solid #252a2f;
-  height: 19px;
+  border-right: 2px solid var(--border-color);
+  height: 25px;
 }
 #endpoint-file {
   display: none;

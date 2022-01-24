@@ -1,5 +1,5 @@
 
-
+/* tslint:disable */
 import axios, { AxiosPromise } from 'axios';
 import { cancelToken } from '@/utils/cancelToken';
 import * as option from './query/option';
@@ -25,10 +25,12 @@ const query: any = {
 class Graph {
   private queryData: string = '';
   public query(queryData: string) {
+  
     this.queryData = queryData;
     return this;
   }
   public params(variablesData: any): AxiosPromise<void> {
+    // console.log(query[this.queryData]);
     return axios
       .post(
         '/graphql',
@@ -42,6 +44,7 @@ class Graph {
         if (res.data.errors) {
           res.data.errors = res.data.errors.map((e: { message: string }) => e.message).join(' ');
         }
+        // console.log(res);
         return res;
       })
       .catch((err) => {

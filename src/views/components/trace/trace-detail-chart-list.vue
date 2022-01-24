@@ -1,34 +1,30 @@
-<!-- Licensed to the Apache Software Foundation (ASF) under one or more
-contributor license agreements.  See the NOTICE file distributed with
-this work for additional information regarding copyright ownership.
-The ASF licenses this file to You under the Apache License, Version 2.0
-(the "License"); you may not use this file except in compliance with
-the License.  You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. -->
 <template>
   <div class="time-charts scroll_hide">
-    <div class="rk-trace-t-loading" v-show="loading">
+    <div class="rk-trace-t-loading"
+         v-show="loading">
       <svg class="icon loading">
         <use xlink:href="#spinner"></use>
       </svg>
     </div>
-    <transition-group name="fade" tag="a" class="mb-5">
-      <span class="time-charts-item mr-10" v-for="(i, index) in list" :key="i" :style="`color:${computedScale(index)}`">
+    <transition-group name="fade"
+                      tag="a"
+                      class="mb-5">
+      <span class="time-charts-item mr-10"
+            v-for="(i, index) in list"
+            :key="i"
+            :style="`color:${computedScale(index)}`">
         <svg class="icon vm mr-5 sm">
           <use xlink:href="#issue-open-m"></use>
         </svg>
         <span>{{ i }}</span>
       </span>
     </transition-group>
-    <a class="rk-btn r vm  tc" @click="downloadTrace">{{ $t('exportImage') }}</a>
-    <rk-sidebox :width="'50%'" :show.sync="showDetail" :title="$t('spanInfo')">
+    <a class="rk-btn r vm  tc"
+       @click="downloadTrace">{{ $t('exportImage') }}</a>
+    <rk-sidebox :width="'50%'"
+                :show.sync="showDetail"
+                :title="$t('spanInfo')">
       <TraceSpanLogs :currentSpan="currentSpan" />
     </rk-sidebox>
     <div class="trace-list">
@@ -295,49 +291,49 @@ limitations under the License. -->
   };
 </script>
 <style lang="scss">
-  .time-charts {
-    overflow: auto;
-    padding: 10px 30px;
-    position: relative;
-    min-height: 150px;
+.time-charts {
+  overflow: auto;
+  padding: 10px 30px;
+  position: relative;
+  min-height: 150px;
+}
+.trace-node .group {
+  cursor: pointer;
+  fill-opacity: 0;
+}
+.trace-node-container {
+  fill: rgba(0, 0, 0, 0);
+  stroke-width: 5px;
+  cursor: pointer;
+  &:hover {
+    fill: rgba(0, 0, 0, 0.05);
   }
-  .trace-node .group {
-    cursor: pointer;
-    fill-opacity: 0;
+}
+.trace-node .node-text {
+  font: 12.5px sans-serif;
+  pointer-events: none;
+}
+.domain {
+  display: none;
+}
+.time-charts-item {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid;
+  font-size: 11px;
+  border-radius: 4px;
+}
+.trace-list {
+  fill: rgba(0, 0, 0, 0);
+}
+.trace-list .trace-node rect {
+  &:hover {
+    fill: rgba(0, 0, 0, 0.05);
   }
-  .trace-node-container {
-    fill: rgba(0, 0, 0, 0);
-    stroke-width: 5px;
-    cursor: pointer;
-    &:hover {
-      fill: rgba(0, 0, 0, 0.05);
-    }
-  }
-  .trace-node .node-text {
-    font: 12.5px sans-serif;
-    pointer-events: none;
-  }
-  .domain {
-    display: none;
-  }
-  .time-charts-item {
-    display: inline-block;
-    padding: 2px 8px;
-    border: 1px solid;
-    font-size: 11px;
-    border-radius: 4px;
-  }
-  .trace-list {
-    fill: rgba(0, 0, 0, 0);
-  }
-  .trace-list .trace-node rect {
-    &:hover {
-      fill: rgba(0, 0, 0, 0.05);
-    }
-  }
-  .dialog-c-text {
-    white-space: pre;
-    overflow: auto;
-    font-family: monospace;
-  }
+}
+.dialog-c-text {
+  white-space: pre;
+  overflow: auto;
+  font-family: monospace;
+}
 </style>

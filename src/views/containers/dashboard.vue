@@ -1,47 +1,37 @@
 
 <template>
-  <!-- 仪表盘页面 -->
-  <div class="flex-v wrapper"
-       style="flex-grow:1;height: 100%;overflow:hidden">
-    <span>头部-2</span>
-    <!-- <ToolGroup :rocketGlobal="rocketGlobal"
-               :rocketComps="rocketComps" /> -->
-    <div>头部-3</div>
-    <!-- <ToolBar :rocketGlobal="rocketGlobal"
-             :rocketComps="rocketComps"
-             :compType="compType"
-             :durationTime="durationTime"
-             :stateDashboard="stateDashboardOption" /> -->
-    <div>头部-4</div>
-    <!-- <ToolNav :rocketGlobal="rocketGlobal"
-             :rocketComps="rocketComps" /> -->
+  <div class="flex-v wrapper" style="flex-grow:1;height: 100%;overflow:hidden">
+    <!-- APM Database 选择  -->
+    <ToolGroup :rocketGlobal="rocketGlobal" :rocketComps="rocketComps" @changeCurrent='changeCurrent' v-show="false" />
+
+    <!-- 服务 实例 查询 -->
+    <!-- 首页隐藏 -->
+    <ToolBar :rocketGlobal="rocketGlobal" :rocketComps="rocketComps" :compType="compType" :durationTime="durationTime" :stateDashboard="stateDashboardOption" v-show="$route.path !=='/home'" />
+
+    <!-- global service 选择  -->
+    <!-- 首页时候为global数据  并且隐藏该ui -->
+    <ToolNav :rocketGlobal="rocketGlobal" :rocketComps="rocketComps" @changeCurrent='changeCurrent' v-show="$route.path != '/home'" />
+
     <div class="dashboard-container clear">
+      <!-- 服务监控主体内容 -->
       <DashboardItem v-for="(i, index) in rocketComps.tree[rocketComps.group] &&
           rocketComps.tree[rocketComps.group].children[rocketComps.current] &&
-          rocketComps.tree[rocketComps.group].children[rocketComps.current].children"
-                     :key="index + i.title + i.width"
-                     :index="index"
-                     :rocketGlobal="rocketGlobal"
-                     :item="i"
-                     :updateObjects="true"
-                     :rocketOption="stateDashboardOption">
+          rocketComps.tree[rocketComps.group].children[rocketComps.current].children" :key="index + i.title + i.width" :index="index" :rocketGlobal="rocketGlobal" :item="i" :updateObjects="true"
+        :rocketOption="stateDashboardOption">
       </DashboardItem>
-      <div v-show="rocketGlobal.edit"
-           class="rk-add-dashboard-item g-sm-3"
-           @click="ADD_COMP">
+
+      <div v-show="rocketGlobal.edit" class="rk-add-dashboard-item g-sm-3" @click="ADD_COMP">
         + Add An Item
       </div>
     </div>
-    <rk-modal :show.sync="showCacheModal"
-              :title="$t('cacheModalTitle')">
+
+    <rk-modal :show.sync="showCacheModal" :title="$t('cacheModalTitle')">
       <div class="reminder-content">{{ $t('cacheReminderContent') }}</div>
       <div class="reminder-btns">
-        <a class="rk-cache-modal-btn bg-blue mr-10"
-           @click="clearDashboardTemps">
+        <a class="rk-cache-modal-btn bg-blue mr-10" @click="clearDashboardTemps">
           {{ $t('yes') }}
         </a>
-        <a class="rk-cache-modal-btn"
-           @click="closeCacheModal">
+        <a class="rk-cache-modal-btn" @click="closeCacheModal">
           {{ $t('no') }}
         </a>
       </div>
@@ -50,6 +40,8 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable */
+/* tslint:disable */
 import { Component, Vue } from 'vue-property-decorator';
 import { Action, Getter, State, Mutation } from 'vuex-class';
 import ToolBar from '@/views/components/dashboard/tool-bar/tool-bar.vue';
@@ -94,6 +86,17 @@ export default class Dashboard extends Vue {
   private templatesErrors: boolean = false;
   private showCacheModal: boolean = false;
   private intervalCache: any;
+
+  /**
+   * @Author licheng
+   * @Description 子组件对current做改变  首页是current=0 服务监控 = 1
+   * @return
+   * @Date 2022-01-18
+   */
+  changeCurrent(val: any) {
+    this.rocketComps.current = val;
+  }
+
   public reload(): void {
     this.isRouterAlive = false;
     this.$nextTick(() => {
@@ -117,17 +120,21 @@ export default class Dashboard extends Vue {
   private beforeMount() {
     this.GET_ALL_TEMPLATES().then((templateResp: ITemplate[]) => {
       const dashboardTemplate = templateResp.filter((item: ITemplate) => item.type === 'DASHBOARD');
+
       const templatesConfig = dashboardTemplate.map((item: ITemplate) => {
         return { ...JSON.parse(item.configuration)[0], activated: item.activated, disabled: item.disabled };
       });
+
       this.SET_TEMPLATES(templatesConfig);
       if (window.localStorage.getItem('version') === '8.0') {
         const data: string = `${window.localStorage.getItem('dashboard')}`;
         this.SET_COMPS_TREE(JSON.parse(data));
+        // console.log(JSON.parse(data));
       } else {
         window.localStorage.removeItem('dashboard');
         const template = templateResp.filter((item: ITemplate) => item.type === 'DASHBOARD' && item.activated);
         const templatesConfiguration = template.map((item: ITemplate) => JSON.parse(item.configuration)).flat(1);
+
         this.SET_COMPS_TREE(templatesConfiguration || []);
         window.localStorage.setItem('version', '8.0');
         window.localStorage.setItem('dashboard', JSON.stringify(templatesConfiguration));

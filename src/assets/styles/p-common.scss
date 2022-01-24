@@ -1,0 +1,92 @@
+
+:root{
+  --main-color:#3f3f3f;
+  --main-bg:#3f3f3f;
+  --acrive-color: #409eff;
+  --header-bg:#3f3f3f;
+  --header-bg2:#f2f6fc;
+  --border-color:#999
+}
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar
+{
+	width: 10px;
+	height: 10px;
+	background-color: #F5F5F5;
+}
+ 
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgba(233, 230, 230, 0.3);
+	border-radius: 10px;
+	background-color: #e9e9e9;
+}
+ 
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 3px rgba(54, 54, 54, 0.3);
+	background-color: rgb(243, 241, 241);
+}
+
+.el-submenu__title i{
+  color: #fff !important;
+}
+
+.el-menu-item.is-active{
+  background-color:  var(--acrive-color);
+}
+
+.el-menu{
+  height: calc(100% - 80px);
+  background-color: var(--main-color) !important;
+}
+
+.el-menu-item:hover,.el-submenu__title:hover{
+  background-color: var(--acrive-color) !important;
+  opacity: .5;
+}
+
+.el-submenu__title:focus,.el-menu-item:focus
+ {
+  background-color:  var(--acrive-color) !important;
+}
+
+.el-menu-item{
+  padding-left: 15px !important;
+}
+
+.miw-150{
+min-width: 150px;
+}
+
+.miw-200{
+  min-width: 200px !important;
+}
+
+.maw-250{
+  max-width: 250px;
+}
+
+.max-c{
+  width: max-content;
+}
+
+.mr-10{
+  margin-right: 10px;
+}
+
+.mr-15{
+  margin-right: 15px;
+}
+.cn{
+  cursor: no-drop;
+}
+
+input:disabled,select:disabled{
+  background-color: #ddd !important;
+  opacity: .7;
+}

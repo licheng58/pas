@@ -1,59 +1,37 @@
 
 <template>
-  <div class="rk-bar-select cp flex-h"
-       v-clickout="
+  <div class="rk-bar-select cp flex-h miw-200 maw-250" v-clickout="
       () => {
         visible = false;
         search = '';
       }
-    "
-       :class="{ active: visible, dark: theme === 'dark' }">
-    <div class="rk-bar-i flex-h"
-         @click="visible = !visible"
-         :class="{ dark: theme === 'dark' }">
+    " :class="{ active: visible, dark: theme === 'dark' }">
+    <div class="rk-bar-i flex-h " @click="visible = !visible" :class="{ dark: theme === 'dark' }">
       <div class="mr-15 rk-bar-i-text">
-        <div v-if="Array.isArray(current)"
-             class="flex-h">
-          <div class="selected"
-               v-for="item in current"
-               :key="item.key">
+        <div v-if="Array.isArray(current)" class="flex-h">
+          <div class="selected" v-for="item in current" :key="item.key">
             <span>{{ item.label }}</span>
-            <span class="remove-icon"
-                  v-if="current.length !== 1"
-                  @click="removeSelected(item)">×</span>
+            <span class="remove-icon" v-if="current.length !== 1" @click="removeSelected(item)">×</span>
           </div>
         </div>
-        <div class="ell"
-             v-else
-             v-tooltip:right.ellipsis="current.label || ''">
+        <div class="ell" v-else v-tooltip:right.ellipsis="current.label || ''">
           {{ current.label }}
         </div>
       </div>
-      <svg class="icon lg trans"
-           :style="`transform: rotate(${visible ? 180 : 0}deg)`">
+      <svg class="icon lg trans" :style="`transform: rotate(${visible ? 180 : 0}deg)`">
         <use xlink:href="#arrow-down"></use>
       </svg>
     </div>
-    <div class="rk-sel"
-         v-show="visible"
-         :class="{ dark: theme === 'dark' }">
+
+    <div class="rk-sel " v-show="visible" :class="{ dark: theme === 'dark' }">
       <div>
-        <input type="text"
-               class="rk-sel-search"
-               v-model="search"
-               :class="{ dark: theme === 'dark' }" />
-        <svg class="icon sm close"
-             @click="search = ''"
-             v-if="search">
+        <input type="text" class="rk-sel-search" v-model="search" :class="{ dark: theme === 'dark' }" />
+        <svg class="icon sm close" @click="search = ''" v-if="search">
           <use xlink:href="#clear"></use>
         </svg>
       </div>
       <div class="rk-opt-wrapper">
-        <div class="rk-opt ell"
-             @click="handleSelect(i)"
-             :class="{ 'select-disabled': selectedOpt.includes(i.key), dark: theme === 'dark' }"
-             v-for="i in filterData"
-             :key="i.key">
+        <div class="rk-opt ell" @click="handleSelect(i)" :class="{ 'select-disabled': selectedOpt.includes(i.key), dark: theme === 'dark' }" v-for="i in filterData" :key="i.key">
           {{ i.label }}
         </div>
       </div>
@@ -108,7 +86,7 @@ export default class RkSelect extends Vue {
   position: relative;
   justify-content: space-between;
   border: 1px solid #ddd;
-  background: #fff;
+  background: #fff !important;
   border-radius: 3px;
   color: #000;
   .sm {
@@ -138,8 +116,11 @@ export default class RkSelect extends Vue {
 .rk-bar-i {
   height: 100%;
   width: 100%;
-  padding: 2px 10px;
+  padding: 0 10px;
   overflow: auto;
+  background-color: #fff !important;
+  color: #000 !important;
+  border-radius: 3px;
 }
 .rk-sel {
   position: absolute;

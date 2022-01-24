@@ -8,7 +8,6 @@ interface Handles {
   [key: string]: any[];
 }
 
-
 export class EventBus {
   private readonly Vue: any;
   private readonly eventMapUid: any;

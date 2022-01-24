@@ -1,37 +1,85 @@
 
 <template>
-  <div class="sm flex-h page-tools">
-    <RkFooterTime />
-    <span class="mr-10 cp"
-          id="utcVal"> UTC{{ utcHour >= 0 ? '+' : '' }}{{ `${this.utcHour}:${this.utcMin}` }} </span>
-    <span class="ghost mr-5 cp"
+  <div class="sm flex-h page-tools"
+       style="width:100%;justify-content: space-between;">
+
+    <div class="flex-h">
+
+      <!-- 时间 -->
+      <span class="f-14">设置时间 :</span>
+      <RkFooterTime />
+
+      <!-- utc -->
+      <span class="mr-10  f-14"
+            id="utcVal">时区 : UTC{{ utcHour >= 0 ? '+' : '' }}{{ `${this.utcHour}:${this.utcMin}` }} </span>
+    </div>
+
+    <!-- 版本 -->
+    <div class="flex-h item f-14"
+         v-show="$route.path === '/home'">
+      <span class="label">{{ $t('version')+' : ' }}</span>
+      <span style="margin-left:5px">{{ rocketbotGlobal.version }}</span>
+    </div>
+
+    <!-- 自动刷新  -->
+    <div class="flex-h item f-14">
+      <span class="label"
+            style="margin:0 10px">{{ $t('auto') }}</span>
+      <rk-switch class="mr-10"
+                 :checked="auto"
+                 @onChange="handleAuto" />
+      <div class="auto-time">
+        <span class="rk-auto-select">
+          <input v-model="autoTime"
+                 type="number"
+                 @change="changeAutoTime"
+                 min="1" />
+        </span>
+        {{ $t('second') }}
+        <i class="ml-10"
+           style="color:#f56c6c">{{ $t('timeReload') }}</i>
+      </div>
+    </div>
+
+    <!-- 修改按钮 -->
+    <!-- <span class="ghost cp"
+          v-tooltip:bottom="{content:'修改版本 自动刷新时间'}">
+      <rk-icon icon="edit1"
+               id="settings"
+               class="i-18"
+               style="margin-bottom:3px" />
+    </span> -->
+
+    <!-- 刷新按钮 -->
+    <!-- <span class="ghost mr-5 cp"
           @click="handleReload"
-          title="refresh">
+          v-tooltip:bottom="{content:'刷新'}"
+          style="margin:0 10px">
       <rk-icon icon="retry"
                :loading="auto"
-               class="lg" />
-    </span>
-    <span class="ghost cp">
-      <rk-icon icon="keyboard_arrow_down"
-               class="xll"
-               id="settings" />
-    </span>
-    <div class="tool-bar-setting "
+               class="i-20"
+               style="margin-bottom:3px" />
+    </span> -->
+
+    <!-- 修改弹框 -->
+    <!--   <div class="tool-bar-setting "
          v-show="showSetting"
          @click="markSettings">
-      <div class="flex-h item">
+     <div class="flex-h item">
         <span class="label">{{ $t('version') }}</span>
         <span>{{ rocketbotGlobal.version }}</span>
-      </div>
-      <div class="flex-h item">
+      </div> -->
+
+    <!-- <div class="flex-h item">
         <span class="label">{{ $t('language') }}</span>
         <span>Zh</span>
         <rk-switch class="mr-5 ml-5"
                    :checked="lang === 'en'"
                    @onChange="setLang" />
         <span>En</span>
-      </div>
-      <div class="flex-h item">
+      </div> -->
+
+    <!-- <div class="flex-h item">
         <span class="label">{{ $t('serverZone') }}</span>
         <div>
           <span>UTC{{ utcHour >= 0 ? '+' : '' }}</span>
@@ -48,8 +96,9 @@
                  class="rk-utc"
                  type="number" />
         </div>
-      </div>
-      <div class="flex-h item">
+      </div> -->
+
+    <!-- <div class="flex-h item">
         <span class="label">{{ $t('auto') }}</span>
         <rk-switch class="mr-10"
                    :checked="auto"
@@ -65,7 +114,7 @@
           <i class="ml-10">{{ $t('timeReload') }}</i>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

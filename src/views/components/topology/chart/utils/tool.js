@@ -17,10 +17,10 @@
 const requireComponent = require.context('./tool', false, /\.png$/);
 
 const icons = {};
-function capitalizeFirstLetter(str) {
+function capitalizeFirstLetter (str) {
   return str.toUpperCase();
 }
-function validateFileName(str) {
+function validateFileName (str) {
   return /^\S+\.png$/.test(str) && str.replace(/^\S+\/(\w+)\.png$/, (rs, $1) => capitalizeFirstLetter($1));
 }
 requireComponent.keys().forEach((filePath) => {
@@ -42,7 +42,7 @@ const Hexagon = (side, r, cx, cy) => {
 
 export default (graph, data) => {
   const tool = graph.append('g').attr('class', 'topo-tool');
-  const side = 6;
+  const side = 4;
   for (let i = 0; i < data.length; i += 1) {
     let x = Math.cos((2 / side) * i * Math.PI) * 34;
     let y = -Math.sin((2 / side) * i * Math.PI) * 34;
@@ -53,7 +53,7 @@ export default (graph, data) => {
     tool_g
       .append('path')
       .attr('class', 'tool-hexagon')
-      .attr('d', Hexagon(6, 17, x, y));
+      .attr('d', Hexagon(4, 17, x, y));
     tool_g
       .append('svg:image')
       .attr('width', 14)

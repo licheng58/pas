@@ -3,7 +3,7 @@
 <template>
   <div style="height: 100%">
     <div class="rk-dashboard-bar flex-h">
-      <div class="flex-h">
+      <!-- <div class="flex-h">
         <div class="rk-dashboard-bar-btn">
           <span v-tooltip:bottom="{ content: rocketGlobal.edit ? 'view' : 'edit' }">
             <svg class="icon lg vm cp rk-btn ghost"
@@ -38,19 +38,13 @@
             </svg>
           </span>
         </div>
-      </div>
+      </div> -->
       <div class="rk-dashboard-bar-tool flex-h">
         <div class="flex-h">
-          <ToolBarSelect :selectable="false"
-                         :title="$t('currentService')"
-                         :current="current"
-                         icon="package" />
-          <ToolBarSelect @onChoose="selectInstance"
-                         :title="$t('currentInstance')"
-                         :current="stateDashboardOption.currentInstance"
-                         :data="stateDashboardOption.instances"
-                         icon="disk" />
-          <div class="pl-10 pb-5 flex-h">
+          <!-- <ToolBarSelect :selectable="false" :title="$t('currentService')" :current="current" icon="package" /> -->
+          <div class="mr-15"><span>当前服务 : </span>{{current.label}}</div>
+          <ToolBarSelect @onChoose="selectInstance" :title="$t('currentInstance')" :current="stateDashboardOption.currentInstance" :data="stateDashboardOption.instances" icon="disk" />
+          <!-- <div class="pl-10 pb-5 flex-h">
             <div class="type grey">{{ $t('templateType') }}</div>
             <RkSelect class="content grey"
                       :mode="'multiple'"
@@ -58,16 +52,12 @@
                       :data="templateTypesList"
                       :theme="'dark'"
                       @onChoose="(item) => changeTemplatesType(item)" />
-          </div>
+          </div> -->
         </div>
-        <DashboardEvent :rocketComps="rocketComps"
-                        :stateDashboard="stateDashboardOption"
-                        :durationTime="durationTime"
-                        :type="pageEventsType" />
+        <!-- <DashboardEvent :rocketComps="rocketComps" :stateDashboard="stateDashboardOption" :durationTime="durationTime" :type="pageEventsType" /> -->
       </div>
     </div>
-    <instances-survey :currentType="currentType"
-                      ref="survey" />
+    <instances-survey :currentType="currentType" ref="survey" />
   </div>
 </template>
 
@@ -242,12 +232,15 @@ export default class WindowInstance extends Vue {
 .rk-dashboard-bar {
   flex-shrink: 0;
   color: #efefef;
-  background-color: #333840;
+  background-color: var(--header-bg);
+  border-left: 1px solid var(--border-color);
+  padding-left: 15px;
 }
 .rk-dashboard-bar-btn {
   padding: 0 5px;
-  border-right: 2px solid #252a2f;
-  height: 19px;
+  border-right: 2px solid var(--border-color);
+  height: 25px;
+  // padding-left: 15px;
 }
 #instance-file {
   display: none;

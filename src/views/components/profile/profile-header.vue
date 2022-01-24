@@ -3,10 +3,13 @@
 <template>
   <div class="rk-profile-header">
     <div>
+      <!-- 新建任务按钮 -->
       <a class="rk-new-task-btn r"
          @click="showDialogTask">
         <span class="mr-5 vm">{{ $t('newTask') }}</span>
       </a>
+
+      <!-- 搜索按钮 -->
       <a class="rk-profile-header-btn bg-blue r mr-10"
          @click="searchTask">
         <svg class="icon mr-5 vm">
@@ -14,20 +17,26 @@
         </svg>
         <span class="vm">{{ $t('search') }}</span>
       </a>
+
+      <!-- 服务 端点名称 -->
       <div class="flex-h">
+        <!-- 服务 -->
         <CommonSelector :hasSearch="true"
-                        :title="$t('service')"
+                        title="服务 :"
                         :value="headerSource.currentService"
                         @input="chooseService"
                         :data="headerSource.serviceSource" />
+        <div class="f-14 grey">端点名称 :</div>
         <div class="mr-10"
              style="padding: 3px 15px 0">
-          <div class="sm grey">{{ $t('endpointName') }}</div>
+
           <input type="text"
                  v-model="endpointName"
                  class="rk-profile-header-input" />
         </div>
       </div>
+
+      <!-- 弹框 -->
       <rk-sidebox class="profile-task-box"
                   width="600px"
                   :title="$t('newTask')"
@@ -84,16 +93,17 @@ export default class ProfileHeader extends Vue {
 <style lang="scss">
 .rk-profile-header {
   flex-shrink: 0;
-  background-color: #333840;
+  background-color: var(--main-bg);
   color: #eee;
   width: 100%;
-  padding: 3px 15px 8px;
+  padding: 8px 15px;
+  border-left: 1px solid var(--border-color);
 }
 
 .rk-profile-header-input {
   border-style: unset;
   outline: 0;
-  padding: 2px 5px;
+  padding: 4px 10px;
   border-radius: 3px;
 }
 
@@ -101,7 +111,7 @@ export default class ProfileHeader extends Vue {
   padding: 3px 9px;
   background-color: #484b55;
   border-radius: 4px;
-  margin-top: 12px;
+  // margin-top: 12px;
 
   &.bg-blue {
     background-color: #448dfe;
@@ -112,7 +122,7 @@ export default class ProfileHeader extends Vue {
   padding: 3px 9px;
   background-color: #484b55;
   border-radius: 4px;
-  margin-top: 12px;
+  // margin-top: 12px;
 
   &.bg-warning {
     background-color: #fbb03b;

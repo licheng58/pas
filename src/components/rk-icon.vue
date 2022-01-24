@@ -39,6 +39,10 @@ export default class RkIcon extends Vue {
     width: 18px;
     height: 18px;
   }
+  &.i-20 {
+    width: 20px;
+    height: 20px;
+  }
   &.xll {
     width: 25px;
     height: 25px;

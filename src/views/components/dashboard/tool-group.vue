@@ -4,6 +4,7 @@
     <span v-for="(i, index) in rocketComps.tree || []"
           :key="index"
           class="mr-15">
+
       <a class="rk-dashboard-group-i mb-10"
          @click="handleOption(index, i.serviceGroup)"
          :class="{
@@ -16,6 +17,7 @@
         <use xlink:href="#file-deletion"></use>
       </svg>
     </span>
+
     <a class="rk-dashboard-group-add"
        v-clickout="handleHide"
        v-if="rocketGlobal.edit">
@@ -77,6 +79,20 @@ export default class ToolGroup extends Vue {
   private DASHBOARDTYPE = DASHBOARDTYPE;
   private templateName: string = '';
 
+  private created() {
+    /**
+     * @Author licheng
+     * @Description 数据切换到database
+     * @return
+     * @Date 2022-01-18
+     */
+    if (this.$route.path === '/database') {
+      this.$store.commit('set_database', 1);
+    } else {
+      this.$store.commit('set_database', 0);
+    }
+  }
+
   private get compType() {
     return (
       (this.rocketComps.tree[this.rocketComps.group] && this.rocketComps.tree[this.rocketComps.group].type) || 'service'
@@ -106,7 +122,11 @@ export default class ToolGroup extends Vue {
 
     return templates;
   }
+
+  // 点击APM。。。
   private handleOption(index: number, serviceGroup: string) {
+    // console.log('index---' + index);
+    // console.log('serviceGroup---' + serviceGroup);
     this.MIXHANDLE_CHANGE_GROUP(index);
     return this.MIXHANDLE_GET_OPTION({
       compType: this.compType,
@@ -115,6 +135,7 @@ export default class ToolGroup extends Vue {
       pageType: PageTypes.DASHBOARD,
     });
   }
+
   private handleHide() {
     this.name = '';
     this.type = DASHBOARDTYPE.SERVICE;
@@ -130,10 +151,12 @@ export default class ToolGroup extends Vue {
 
 <style lang="scss" scoped>
 .rk-dashboard-group {
-  border-bottom: 1px solid #252a2f;
-  background-color: #333840;
+  border-bottom: 1px solid var(--border-color);
+  // background-color: #333840;
+  background-color: var(--header-bg);
   padding: 10px 15px 0;
   color: #eee;
+  border-left: 1px solid var(--border-color);
 }
 .rk-dashboard-group-sel {
   outline: none;

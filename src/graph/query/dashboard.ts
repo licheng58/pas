@@ -12,6 +12,7 @@ import {
   queryMetricsValue,
   queryMetricsValues,
   fetchEvents,
+  queryTest,
 } from '../fragments/dashboard';
 
 export const queryTypeOfMetrics = `query queryTypeOfMetrics(${TypeOfMetrics.variable}) {${TypeOfMetrics.query}}`;
@@ -20,7 +21,9 @@ export const mutationChangeTemplate = `mutation mutationChangeTemplate(${changeT
   ${changeTemplate.query}}`;
 
 export const mutationDisableTemplate = `mutation mutationDisableTemplate(${disableTemplate.variable}) {
-  ${disableTemplate.query}}`;
+    ${disableTemplate.query}}`;
+
+export const queryTest1 = `query queryTest(${queryTest.variable}) {${queryTest.query}}`;
 
 export const queryGetAllTemplates = `query queryGetAllTemplates {${getAllTemplates.query}}`;
 

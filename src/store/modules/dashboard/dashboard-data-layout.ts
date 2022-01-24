@@ -1,5 +1,5 @@
 
-
+/* tslint:disable */
 import { MutationTree } from 'vuex';
 import { CompsTree } from '@/types/dashboard';
 import * as types from './mutation-types';
@@ -14,7 +14,7 @@ export interface State {
 
 export const initState: State = {
   current: 0,
-  group: 0,
+  group: 0,//服务监控 点击APM-0  点击database - 1
   index: 0,
   tree: [
     {
@@ -35,6 +35,7 @@ export const initState: State = {
 
 // mutations
 const mutations: MutationTree<State> = {
+  
   [types.SET_COMPS_TREE](state: State, data: CompsTree[]) {
     state.tree = data;
   },
@@ -44,24 +45,29 @@ const mutations: MutationTree<State> = {
     localStorage.setItem('isUpdatedTemplates', 'true');
   },
   [types.SET_GROUP_QUERY](state: State, params: any) {
+    
     state.tree[state.group].query = params;
   },
   [types.SET_CURRENT_COMPS](state: State, current: number) {
     state.current = current;
   },
   [types.SET_CURRENT_INDEX](state: State, index: number) {
+    
     state.index = index;
   },
   [types.SET_CURRENT_GROUP](state: State, current: number) {
+    
     state.group = current;
     state.current = 0;
   },
   [types.SET_CURRENT_SERVICE_GROUP](state: State, serviceGroup: string) {
+   
     state.tree.splice(state.group, 1, Object.assign(state.tree[state.group], { serviceGroup }));
     window.localStorage.setItem('dashboard', JSON.stringify(state.tree));
     localStorage.setItem('isUpdatedTemplates', 'true');
   },
   [types.SET_CURRENT_GROUP_WITH_CURRENT](state: State, { index, current = 0 }: { index: number; current: number }) {
+    
     state.group = index;
     state.current = current;
   },
@@ -94,6 +100,7 @@ const mutations: MutationTree<State> = {
     localStorage.setItem('isUpdatedTemplates', 'true');
   },
   [types.DELETE_COMPS_GROUP](state: State, index: number) {
+  
     state.tree.splice(index, 1);
     if (!state.tree[state.group]) {
       state.group--;
@@ -137,6 +144,10 @@ const mutations: MutationTree<State> = {
   },
   [types.SET_TEMPLATES](state: State, templates) {
     state.templates = templates;
+  },
+
+  set_database(state: State, templates) {
+    state.group = templates;
   },
 };
 

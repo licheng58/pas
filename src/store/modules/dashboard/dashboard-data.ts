@@ -1,5 +1,5 @@
 
-
+/* tslint:disable */
 import { ActionTree, MutationTree, Commit, Dispatch } from 'vuex';
 import { CompsTree, Event } from '@/types/dashboard';
 import { AxiosResponse } from 'axios';
@@ -138,10 +138,12 @@ const actions: ActionTree<State, any> = {
     if (rocketOption.currentDatabase) {
       temp.database = rocketOption.currentDatabase;
     }
+    // console.log('首次加载页面');
     context.commit('SET_GROUP_QUERY', temp);
     context.commit('SET_CURRENT_GROUP', index);
     context.dispatch('RUN_EVENTS', {}, { root: true });
   },
+  
   MIXHANDLE_CHANGE_GROUP_WITH_CURRENT(
     context: { commit: Commit; dispatch: Dispatch; state: State; rootState: any },
     { index, current = 0 }: { index: number; current: number },
@@ -160,6 +162,8 @@ const actions: ActionTree<State, any> = {
     if (rocketOption.currentDatabase) {
       temp.database = rocketOption.currentDatabase;
     }
+ 
+    
     context.commit('SET_GROUP_QUERY', temp);
     context.commit('SET_CURRENT_GROUP_WITH_CURRENT', { index, current });
     context.dispatch('RUN_EVENTS', {}, { root: true });
@@ -181,7 +185,7 @@ const actions: ActionTree<State, any> = {
       }),
     );
   },
-  GET_ALL_TEMPLATES(context) {
+  GET_ALL_TEMPLATES(context) {    
     return graph
       .query('queryGetAllTemplates')
       .params({})
